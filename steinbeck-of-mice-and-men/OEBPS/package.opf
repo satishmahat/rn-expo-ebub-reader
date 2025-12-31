@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<package xmlns="http://www.idpf.org/2007/opf" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" version="3.0" xml:lang="en" unique-identifier="pub-identifier">
+  <metadata>
+    <dc:identifier id="pub-identifier">_a6567460-8fd4-4d43-aad0-0b1ab332d6f5</dc:identifier>
+    <meta id="meta-identifier" property="dcterms:identifier">_a6567460-8fd4-4d43-aad0-0b1ab332d6f5</meta>
+    <dc:title id="pub-title">Of Mice and Men</dc:title>
+    <meta property="dcterms:title" id="meta-title">Of Mice and Men</meta>
+    <dc:language id="pub-language">en</dc:language>
+    <meta property="dcterms:language" id="meta-language">en</meta>
+    <meta property="dcterms:modified">2021-12-26T13:38:19Z</meta>
+    <!--The preceding date value is actually local time (not UTC) in UTC format because there is no function in XSLT 1.0 to generate a correct UTC time-->
+    <meta content="cover-image" name="cover"/>
+    <meta id="meta-creator1" property="dcterms:creator">John Steinbeck</meta>
+    <dc:creator id="pub-creator1">John Steinbeck</dc:creator>
+    <meta property="dcterms:date">2021-12-26</meta>
+    <dc:date>2021-12-26</dc:date>
+    <meta property="dcterms:publisher">epubBooks Classics</meta>
+    <dc:publisher>epubBooks Classics</dc:publisher>
+    <meta property="dcterms:rights">Copyright © 2021 epubBooks</meta>
+    <dc:rights>Copyright © 2021 epubBooks</dc:rights>
+    <meta property="dcterms:rightsHolder">epubBooks</meta>
+  </metadata>
+  <manifest>
+    <item id="ncx" href="toc.ncx" media-type="application/x-dtbncx+xml"/>
+    <item id="htmltoc" properties="nav" media-type="application/xhtml+xml" href="bk01-toc.xhtml"/>
+    <item media-type="text/css" id="html-css" href="epubbooks.css"/>
+    <item media-type="text/css" id="docbook-css" href="docbook-epub.css"/>
+    <item id="cover" href="cover.xhtml" media-type="application/xhtml+xml"/>
+    <item id="cover-image" properties="cover-image" href="bookcover-generated.jpg" media-type="image/jpeg"/>
+    <item id="id-idm1" href="index.xhtml" media-type="application/xhtml+xml"/>
+    <item id="id-idm36" href="ch01.xhtml" media-type="application/xhtml+xml"/>
+    <item id="id-idm187" href="ch02.xhtml" media-type="application/xhtml+xml"/>
+    <item id="id-idm403" href="ch03.xhtml" media-type="application/xhtml+xml"/>
+    <item id="id-idm680" href="ch04.xhtml" media-type="application/xhtml+xml"/>
+    <item id="id-idm839" href="ch05.xhtml" media-type="application/xhtml+xml"/>
+    <item id="id-idm955" href="ch06.xhtml" media-type="application/xhtml+xml"/>
+  </manifest>
+  <spine toc="ncx">
+    <itemref idref="cover" linear="no"/>
+    <itemref idref="htmltoc" linear="yes"/>
+    <itemref idref="id-idm1"/>
+    <itemref idref="id-idm36"/>
+    <itemref idref="id-idm187"/>
+    <itemref idref="id-idm403"/>
+    <itemref idref="id-idm680"/>
+    <itemref idref="id-idm839"/>
+    <itemref idref="id-idm955"/>
+  </spine>
+  <guide>
+    <reference href="cover.xhtml" type="cover" title="Cover"/>
+    <reference href="bk01-toc.xhtml" type="toc" title="Table of Contents"/>
+  </guide>
+</package>
