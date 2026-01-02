@@ -1,50 +1,204 @@
-# Welcome to your Expo app 👋
+# 📚 EPUB Reader for React Native
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A beautiful, lightweight EPUB reader built with React Native and Expo. Parse and display EPUB books with a modern, customizable reading experience.
 
-## Get started
+![Light Mode](assets/images/IMG_7905.PNG)
+![Dark Mode](assets/images/IMG_7904.PNG)
 
-1. Install dependencies
+## ✨ Features
 
-   ```bash
-   npm install
-   ```
+- **📖 Pure React Native Implementation** - No WebView dependencies, native text rendering for better performance
+- **🎨 Beautiful UI** - Modern, clean interface with smooth animations
+- **🌓 Dark Mode** - Automatic system theme detection with manual toggle
+- **🔤 Font Size Controls** - Adjustable text size (12px - 32px) for comfortable reading
+- **🖼️ Cover Image Display** - Automatic cover extraction and display
+- **📑 Smart Chapter Navigation** - Extract chapter titles and navigate seamlessly
+- **📋 List Support** - Proper handling of table of contents and nested lists
+- **🔍 Robust EPUB Parsing** - Supports both EPUB 2 and EPUB 3 formats
+- **⚡ Lightweight** - Minimal dependencies, fast loading
 
-2. Start the app
+## 🎯 Why This Project?
 
-   ```bash
-   npx expo start
-   ```
+### Common Problems Solved
 
-In the output, you'll find options to open the app in a
+1. **iOS File Access Issues** - Most EPUB readers using WebView face `file://` URI restrictions on iOS. This implementation uses native text rendering, avoiding these issues entirely.
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+2. **Attribute Ordering** - EPUB metadata can have XML attributes in different orders. This parser handles both `name="cover" content="id"` and `content="id" name="cover"` formats.
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+3. **List Formatting** - Many readers don't properly handle `<ol>`, `<ul>`, and nested lists in EPUB files. This implementation converts lists to readable bullet points.
 
-## Get a fresh project
+4. **Text Extraction** - Properly extracts text from HTML while preserving paragraph structure and removing formatting artifacts.
 
-When you're ready, run:
+5. **Cover Image Extraction** - Handles multiple cover image formats (EPUB 2 meta tags, EPUB 3 properties, manifest lookups).
 
+### Unique Value
+
+- **Educational** - Clean, well-documented code showing how EPUB files work internally
+- **Lightweight** - Uses JSZip instead of heavy native modules
+- **Modern Stack** - Built with Expo SDK 54, React 19, and TypeScript
+- **Cross-Platform** - Works on iOS, Android, and Web
+- **No Native Code** - Pure JavaScript/TypeScript implementation
+
+## 🚀 Quick Start
+
+### Prerequisites
+
+- Node.js 18+ 
+- npm or yarn
+- Expo CLI (optional, but recommended)
+
+### Installation
+
+1. Clone the repository:
 ```bash
-npm run reset-project
+git clone https://github.com/yourusername/epub-reader.git
+cd epub-reader
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+2. Install dependencies:
+```bash
+npm install
+```
 
-## Learn more
+3. Start the development server:
+```bash
+npx expo start
+```
 
-To learn more about developing your project with Expo, look at the following resources:
+4. Open on your device:
+   - Press `i` for iOS simulator
+   - Press `a` for Android emulator
+   - Scan QR code with Expo Go app
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+## 📦 Adding Your EPUB Files
 
-## Join the community
+Place your EPUB files in the `assets/books/` directory:
 
-Join our community of developers creating universal apps.
+```
+assets/
+  books/
+    your-book.epub
+    another-book.epub
+```
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+Then update the file path in `app/index.tsx`:
+
+```typescript
+const asset: Asset = Asset.fromModule(
+  require('../assets/books/your-book.epub')
+);
+```
+
+## 🏗️ Project Structure
+
+```
+epub-reader/
+├── app/
+│   ├── _layout.tsx      # Root layout with theme provider
+│   └── index.tsx        # Main EPUB reader component
+├── assets/
+│   ├── books/           # Place your EPUB files here
+│   └── images/          # App icons and screenshots
+├── components/           # Reusable UI components
+├── constants/           # Theme constants
+├── hooks/               # Custom React hooks
+└── metro.config.js      # Metro bundler config for EPUB files
+```
+
+## 🔧 How It Works
+
+### EPUB Parsing Pipeline
+
+1. **Asset Loading** - Loads EPUB file using Expo Asset API
+2. **Base64 Conversion** - Converts file to base64 for JSZip
+3. **Unzip** - Extracts EPUB archive (EPUBs are ZIP files)
+4. **Container Parsing** - Reads `META-INF/container.xml` to find OPF path
+5. **OPF Parsing** - Extracts metadata and reading order from OPF file
+6. **Metadata Extraction** - Gets title, author, and cover image
+7. **Chapter Extraction** - Processes each chapter file in reading order
+8. **HTML to Text** - Converts XHTML to clean, readable text
+9. **Rendering** - Displays content in React Native components
+
+### Key Components
+
+- **`loadEpub()`** - Main loading function that orchestrates the parsing
+- **`extractMetadata()`** - Extracts book metadata from OPF
+- **`extractChapters()`** - Processes chapters in reading order
+- **`extractTextFromHtml()`** - Converts HTML to formatted text
+- **`extractTitle()`** - Extracts chapter titles from HTML
+
+## 🎨 Customization
+
+### Theme Colors
+
+Edit the theme object in `app/index.tsx`:
+
+```typescript
+const theme = {
+  background: isDark ? '#1a1a1a' : '#ffffff',
+  primary: isDark ? '#4dabf7' : '#007AFF',
+  // ... more colors
+};
+```
+
+### Font Size Range
+
+Adjust the min/max font size:
+
+```typescript
+const increaseFontSize = (): void => {
+  if (fontSize < 32) setFontSize(fontSize + 2); // Max 32px
+};
+
+const decreaseFontSize = (): void => {
+  if (fontSize > 12) setFontSize(fontSize - 2); // Min 12px
+};
+```
+
+## 📚 EPUB Format Support
+
+This reader supports:
+
+- ✅ EPUB 2.0
+- ✅ EPUB 3.0
+- ✅ Dublin Core metadata
+- ✅ Cover images (multiple formats)
+- ✅ Table of contents
+- ✅ Nested lists
+- ✅ HTML entities
+- ✅ Multiple chapter formats
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+### Areas for Contribution
+
+- [ ] Book library/list view
+- [ ] Reading position persistence
+- [ ] Bookmarks and notes
+- [ ] Search functionality
+- [ ] Text-to-speech integration
+- [ ] Better image support
+- [ ] Footnotes handling
+- [ ] Performance optimizations
+
+## 📝 License
+
+This project is open source and available under the [MIT License](LICENSE).
+
+## 🙏 Acknowledgments
+
+- Built with [Expo](https://expo.dev)
+- EPUB parsing with [JSZip](https://stuk.github.io/jszip/)
+- Icons from [@expo/vector-icons](https://expo.github.io/vector-icons/)
+
+## 📖 Learn More
+
+- [EPUB 3 Specification](https://www.w3.org/publishing/epub3/)
+- [Expo Documentation](https://docs.expo.dev/)
+- [React Native Documentation](https://reactnative.dev/)
+
+---
+
+**Made with ❤️ for the reading community**
